@@ -23,4 +23,19 @@ class Road {
     int last = nodes.size()-1;
     ellipse(nodes.get(last).x, nodes.get(last).y, radius, radius);
   }
+
+  JSONObject toJSON() {
+
+    JSONObject roadJSON = new JSONObject();
+    JSONArray nodesJSON = new JSONArray();
+
+    for (int i=0; i<nodes.size(); i++) {
+      JSONObject nodeJSON = new JSONObject();
+      nodeJSON.setFloat("x", nodes.get(i).x);
+      nodeJSON.setFloat("y", nodes.get(i).y);
+      nodesJSON.setJSONObject(i, nodeJSON);
+    }
+    roadJSON.setJSONArray("nodes", nodesJSON);
+    return roadJSON;
+  }
 }

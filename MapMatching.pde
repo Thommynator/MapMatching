@@ -1,5 +1,7 @@
 ArrayList<Road> roads;
 Button addRoadBtn;
+Button importRoadsBtn;
+Button exportRoadsBtn;
 boolean addNewRoadFlag;
 int pointerSize = 15;
 
@@ -7,6 +9,9 @@ void setup() {
   size(800, 600);
   roads = new ArrayList();
   addRoadBtn = new Button(new PVector(50, 30), 80, 40, "New Road", color(0, 200, 0));
+  importRoadsBtn = new Button(new PVector(150, 30), 80, 40, "Import", color(0, 200, 0));
+  exportRoadsBtn = new Button(new PVector(250, 30), 80, 40, "Export", color(0, 200, 0));
+  
   addNewRoadFlag = false;
   roads.add(new Road());
   background(200);
@@ -16,6 +21,8 @@ void draw() {
   background(200);
 
   addRoadBtn.show();
+  importRoadsBtn.show();
+  exportRoadsBtn.show();
 
   noStroke();
   fill(0, 50);
@@ -35,6 +42,13 @@ void mousePressed() {
     addNewRoadFlag = true;
     return;
   } 
+  if(importRoadsBtn.isOver()){
+    return;
+  }
+  if(exportRoadsBtn.isOver()){
+    selectOutput("Select a file to write to:", "exportRoads");
+    return;
+  }
 
   if (addNewRoadFlag) {
     roads.add(new Road());
@@ -59,4 +73,15 @@ PVector findNearestNode() {
     }
   }
   return closestPos;
+}
+
+void exportRoads(File selection){
+    if (selection == null) {
+    println("Window was closed or the user hit cancel.");
+  } else {
+    println(selection.toString());
+    println(roads.get(0).toJSON().toString());
+    
+  }
+  
 }
