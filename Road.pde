@@ -25,7 +25,6 @@ class Road {
   }
 
   JSONObject toJSON() {
-
     JSONObject roadJSON = new JSONObject();
     JSONArray nodesJSON = new JSONArray();
 

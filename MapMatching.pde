@@ -11,7 +11,7 @@ void setup() {
   addRoadBtn = new Button(new PVector(50, 30), 80, 40, "New Road", color(0, 200, 0));
   importRoadsBtn = new Button(new PVector(150, 30), 80, 40, "Import", color(0, 200, 0));
   exportRoadsBtn = new Button(new PVector(250, 30), 80, 40, "Export", color(0, 200, 0));
-  
+
   addNewRoadFlag = false;
   roads.add(new Road());
   background(200);
@@ -42,10 +42,10 @@ void mousePressed() {
     addNewRoadFlag = true;
     return;
   } 
-  if(importRoadsBtn.isOver()){
+  if (importRoadsBtn.isOver()) {
     return;
   }
-  if(exportRoadsBtn.isOver()){
+  if (exportRoadsBtn.isOver()) {
     selectOutput("Select a file to write to:", "exportRoads");
     return;
   }
@@ -75,13 +75,22 @@ PVector findNearestNode() {
   return closestPos;
 }
 
-void exportRoads(File selection){
-    if (selection == null) {
+void exportRoads(File selection) {
+  if (selection == null) {
     println("Window was closed or the user hit cancel.");
   } else {
-    println(selection.toString());
-    println(roads.get(0).toJSON().toString());
-    
+    println("Saved file to: " + selection.toString());
+    saveJSONObject(roadsToJSON(), selection.getAbsolutePath());
   }
-  
+}
+
+JSONObject roadsToJSON() {
+  JSONObject roadsJSON = new JSONObject();
+  JSONArray tmpRoadsJSON = new JSONArray();
+
+  for (int i=0; i<roads.size(); i++) {
+    tmpRoadsJSON.setJSONObject(i, roads.get(i).toJSON());
+  }
+  roadsJSON.setJSONArray("roads", tmpRoadsJSON);
+  return roadsJSON;
 }
