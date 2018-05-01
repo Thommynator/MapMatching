@@ -1,41 +1,58 @@
 RoadNetwork roadNetwork;
+Trip trip;
+
 Button addRoadBtn;
+Button generateTripBtn;
 Button importRoadsBtn;
 Button exportRoadsBtn;
+
+boolean generateTripFlag;
 boolean addNewRoadFlag;
-int pointerSize = 15;
+int pointerSize = 25;
 
 void setup() {
   size(800, 600);
   roadNetwork = new RoadNetwork();
-  addRoadBtn = new Button(new PVector(50, 15), 80, 20, "New Road", color(0, 200, 0));
-  importRoadsBtn = new Button(new PVector(150, 15), 80, 20, "Import", color(0, 200, 0));
-  exportRoadsBtn = new Button(new PVector(250, 15), 80, 20, "Export", color(0, 200, 0));
+  trip = new Trip();
+  addRoadBtn = new Button(new PVector(50, 15), 90, 20, "New Road", color(0, 200, 0, 128));
+  generateTripBtn = new Button(new PVector(150, 15), 90, 20, "Generate Trip", color(0, 200, 0, 128));
+  importRoadsBtn = new Button(new PVector(250, 15), 90, 20, "Import", color(0, 200, 0, 128));
+  exportRoadsBtn = new Button(new PVector(350, 15), 90, 20, "Export", color(0, 200, 0, 128));
 
   addNewRoadFlag = false;
+  generateTripFlag = false;
   roadNetwork.addRoad(new Road());
   background(200);
 }
 
 void draw() {
   background(200);
-
-  addRoadBtn.show();
-  importRoadsBtn.show();
-  exportRoadsBtn.show();
-
   noStroke();
   fill(0, 50);
   ellipse(mouseX, mouseY, pointerSize, pointerSize);
 
   roadNetwork.show();
+  trip.show();
+  showButtons();
+}
+
+void showButtons() {
+  addRoadBtn.show();
+  generateTripBtn.show();
+  importRoadsBtn.show();
+  exportRoadsBtn.show();
 }
 
 
 void mousePressed() {
-
   if (addRoadBtn.isOver()) {
     addNewRoadFlag = true;
+    generateTripFlag = false;
+    return;
+  } 
+  if (generateTripBtn.isOver()) {
+    addNewRoadFlag = false;
+    generateTripFlag = true;
     return;
   } 
   if (importRoadsBtn.isOver()) {
@@ -44,6 +61,11 @@ void mousePressed() {
   }
   if (exportRoadsBtn.isOver()) {
     selectOutput("Select a file to write to:", "exportRoads");
+    return;
+  }
+
+  if (generateTripFlag) {
+    trip.addPoint(new PVector(mouseX, mouseY));
     return;
   }
 

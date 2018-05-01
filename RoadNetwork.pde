@@ -9,7 +9,7 @@ class RoadNetwork {
     this.roads = new ArrayList();
     JSONArray roadsJSON = importJSON.getJSONArray("roads");
     for (int i = 0; i < roadsJSON.size(); i++) {
-      this.addRoad(new Road(roadsJSON.getJSONObject(i)));
+      this.addRoad(new Road(roadsJSON.getJSONObject(i))); 
     }
   }
 
