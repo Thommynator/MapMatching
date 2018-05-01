@@ -13,7 +13,7 @@ void setup() {
   exportRoadsBtn = new Button(new PVector(250, 15), 80, 20, "Export", color(0, 200, 0));
 
   addNewRoadFlag = false;
-  roadNetwork.add(new Road());
+  roadNetwork.addRoad(new Road());
   background(200);
 }
 
@@ -48,7 +48,7 @@ void mousePressed() {
   }
 
   if (addNewRoadFlag) {
-    roadNetwork.add(new Road());
+    roadNetwork.addRoad(new Road());
     addNewRoadFlag = false;
   }
   roadNetwork.addNodeToLastRoad(roadNetwork.findNearestNode(mouseX, mouseY));

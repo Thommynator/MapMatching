@@ -4,8 +4,19 @@ class Road {
   int radius;
 
   Road() {
-    this.nodes = new ArrayList();
     this.radius = 4;
+    this.nodes = new ArrayList();
+  }
+
+  Road(JSONObject importJSON) {
+    this.radius = 4;
+    this.nodes = new ArrayList();
+
+    JSONArray nodesJSON = importJSON.getJSONArray("nodes");
+    for (int i = 0; i < nodesJSON.size(); i++) {
+      JSONObject node = nodesJSON.getJSONObject(i); 
+      this.addNode(new PVector(node.getFloat("x"), node.getFloat("y")));
+    }
   }
 
   void addNode(PVector newNode) {

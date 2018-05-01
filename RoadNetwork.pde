@@ -2,15 +2,18 @@ class RoadNetwork {
 
   ArrayList<Road> roads;
   RoadNetwork() {
-    roads = new ArrayList();
-  }
-  
-  RoadNetwork(JSONObject importJSON){
-    roads = new ArrayList();
-    println(importJSON); 
+    this.roads = new ArrayList();
   }
 
-  void add(Road road) {
+  RoadNetwork(JSONObject importJSON) {
+    this.roads = new ArrayList();
+    JSONArray roadsJSON = importJSON.getJSONArray("roads");
+    for (int i = 0; i < roadsJSON.size(); i++) {
+      this.addRoad(new Road(roadsJSON.getJSONObject(i)));
+    }
+  }
+
+  void addRoad(Road road) {
     roads.add(road);
   }
 
@@ -26,10 +29,10 @@ class RoadNetwork {
   }
 
   /**
-    * Finds the nearest node to a specific coordinate.
-    * If no node is close enough, the original coordinate 
-    * is returned.
-    */
+   * Finds the nearest node to a specific coordinate.
+   * If no node is close enough, the original coordinate 
+   * is returned.
+   */
   PVector findNearestNode(int x, int y) {
     int threshold = pointerSize;
     float closestDist = 100000;
@@ -57,5 +60,4 @@ class RoadNetwork {
     roadsJSON.setJSONArray("roads", tmpRoadsJSON);
     return roadsJSON;
   }
-  
 }
